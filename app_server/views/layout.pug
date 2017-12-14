@@ -7,7 +7,24 @@ html
     link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark
+      .container
+        a.navbar-brand(href='/ ') Suite D
+        button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarMain')
+          span.navbar-toggler-icon
+        #navbarMain.navbar-collapse.collapse
+          form.form-inline.my-2.my-lg-0.mx-auto
+            input.form-control.mr-sm-2(type='search', placeholder='Customer, Job or Item #', aria-label="Search")
+            button.btn.btn-outline-success.my-2(type='submit') Go
+          ul.navbar-nav.ml-auto
+            li.nav-item
+              a.nav-link(href='/') Home
+    .container
+      block content
+      footer
+        .row
+          .col-12
+            small &copy; RS 2017
     script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js')
-    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/bootstrap.bundle.min.js')

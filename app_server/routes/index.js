@@ -1,9 +1,21 @@
 const express = require('express');
 const router = express.Router();
+//required controllers:
+const ctrlItems = require('../controllers/items');
+const ctrlJobs = require('../controllers/jobs');
+const ctrlCustomers = require('../controllers/customers');
+const ctrlOthers = require('../controllers/others');
 
-const ctrlMain = require('../controllers/main');
+/* Item pages */
+router.get('/item', ctrlItems.item);
 
-/* GET home page. */
-router.get('/', ctrlMain.index);
+/* Job pages */
+router.get('/job', ctrlJobs.job);
+
+/* Customer pages */
+router.get('/customer', ctrlCustomers.customer);
+
+/* Other pages */
+router.get('/', ctrlOthers.about);
 
 module.exports = router;
