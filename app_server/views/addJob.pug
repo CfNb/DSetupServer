@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  +pageHeader(pageHeader.title, pageHeader.actioncall)
+  //- add job form
+  .row
+    .col-12
+      form(action="", method="post", role="form")
+        .form-group.row
+          label.col-10.col-sm-3.col-form-label.text-sm-right(for="number") Job Number:
+          .col-12.col-sm-3
+            input#name.form-control(name="number")
+          .form-check.col-12.col-sm-3
+            label.form-check-label(for="gtg")
+              input.form-check-input(type="checkbox", id="gtg")
+              | GtG
+        .form-group.row
+          label.col-10.col-sm-3.col-form-label.text-sm-right(for="desc") Description:
+          .col-12.col-sm-8
+            input#name.form-control(name="desc")
+      .form-group.row
+        label.col-10.col-sm-3.col-form-label.text-sm-right(for="outsource") Outsource to:
+        .col-12.col-sm-4
+          select#rating.form-control.input-sm(name="outsource")
+            option Create It Packaging
+            option Grace Imaging
+            option 3
+            option 2
+            option 1
+      button.btn.btn-primary.float-right Create Job

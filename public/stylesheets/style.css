@@ -19,6 +19,12 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Lobster', cursive;
 }
 
+.navbar-toggler {
+  /* margin for uniform navbar height accross screen widths */
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
 .banner {
   margin-top: 5.5em;
   border-bottom: 1px solid #469ea8;
@@ -31,8 +37,13 @@ h1 small {
 }
 
 .card {
-  background-color: #469ea8;
+  background-color: #3469bb;
   padding: 1rem;
+  margin-bottom: 1.5em;
+}
+
+.banner-card {
+  background-color: #d65e0f;
 }
 
 .card-primary {
@@ -54,8 +65,12 @@ h1 small {
 }
 
 .badge-default, .btn-primary {
-  background-color: #ad1d28;
+  background-color: #ff944d;
   border-color: #911821;
+}
+
+.badge-default {
+  color: #245397;
 }
 
 h4 a, h4 a:hover {
@@ -66,6 +81,11 @@ h4 small {
   font-size: 60%;
   line-height: 200%;
   color: #aaa;
+}
+
+/* highlight delete on button hover*/
+button:hover span.badge-secondary, button.btn-secondary:hover {
+  background:red;
 }
 
 .address {
@@ -80,9 +100,29 @@ legend {
   font-family: 'Lobster', cursive;
 }
 
-
-/*
-a {
-  color: #00B7FF;
+/* keep form inputs as inline at all screen widths */
+@media (max-width: 767px) {
+  .form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
 }
-*/
+@media (max-width: 767px) {
+  .form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+}
+/* */
+
+a {
+  color: #fff;
+}
+
+a:hover.card {
+  /*color: #ff944d;*/
+  text-decoration:none;
+  background-color: #ff944d;
+}

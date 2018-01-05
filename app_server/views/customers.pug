@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  +pageHeader(pageHeader.title, pageHeader.actioncall)
+  - if (deleted) 
+    .alert.alert-danger(role="alert") Customer #{deleted} has been removed
+  //- customer list
+  .error= message
+  .row
+    .col-12.col-sm-4
+      a.card.banner-card(href='/customer/add')
+        .card-block
+          span.h4 New Customer
+    each customer in customers
+      .col-12.col-sm-4
+        a.card(href='/customer/' + customer.number)
+          .card-block
+            span.h4= customer.name
+            span &nbsp;(#{customer.number})

@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .row.banner
+    //- search box for smaller width screens...wide width uses search in navbar
+    .col-12
+      h1= pageHeader.title
+      h2 
+        a.card.banner-card(href="http://digital/digital") ! Click here to visit the Digital Wordpress Site !
+      .d-md-none
+        +search
+      p #{pageHeader.actioncall}
+  .row
+    .col-12.col-md-6
+      .card.banner-card
+        .card-block.h3 Recent Graphics To Go Jobs
+          span.float-right + New GtG
+      .card.col-11
+        .card-block
+          h4
+            a(href="/job") Job# 106555
+            small &nbsp;
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star-o
+              i.fa.fa-star-o
+            span.badge.badge-pill.badge-default.float-right 6 Items
+          p.address Stage: Proof 1
+          p.facilities Last Operator: RS
+    .col-12.col-md-6
+      .card.banner-card
+        .card-block.h3 Recent Jobs 
+          span.h4.float-right + New Job
+      .card.col-11
+        .card-block
+          h4
+            a(href="/job") Job# 106555
+            small &nbsp;
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star-o
+              i.fa.fa-star-o
+            span.badge.badge-pill.badge-default.float-right 6 Items
+          p.address Stage: Proof 1
+          p.facilities Last Operator: RS

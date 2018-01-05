@@ -1,0 +1,21 @@
+//- Pug Mixin Declarations
+
+mixin search
+  form.form-inline.mx-auto(action="/item", method="get", role="form")
+    input.form-control(type='search', placeholder='Customer, Job or Item #', aria-label="Search")
+    button.btn.btn-outline-success.my-2(type='submit') Go
+
+mixin pageHeader(title, actioncall)
+  .row.banner
+    .col-12
+      h1= title
+      p= actioncall
+      
+mixin formatDate(dateString)
+  -const date = new Date(dateString);
+  -const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  -const d = date.getDate();
+  -const m = monthNames[date.getMonth()];
+  -const y = date.getFullYear();
+  -const output = `${d} ${m} ${y}`;
+  =output

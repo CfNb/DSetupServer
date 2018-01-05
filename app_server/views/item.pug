@@ -1,17 +1,21 @@
 extends layout
 
 block content
+  +pageHeader(pageHeader.title, pageHeader.actioncall)
+  //- item information
   .row.banner
     .col-12
-      h1 Item#
-      p &nbsp;Review the Prepress Status of Jobs by entering a reference number in the search box above.
+      .card.banner-card
+        .card-block
+          span.h4 Item 1
+          span &nbsp; description? file name?
+          p.address Original file name
   .row
-    .col-12.col-md-8
-      p Recent Jobs:
+    //- notes card
+    .col-12.col-md-6
       .card
         .card-block
-          h4
-            a(href="/location") Job# 106555
+          h4 Prepress Notes
             small &nbsp;
               i.fa.fa-star
               i.fa.fa-star
@@ -21,5 +25,46 @@ block content
             span.badge.badge-pill.badge-default.float-right 6 Items
           p.address Stage: Proof 1
           p.facilities Last Operator: RS
-    .col-12.col-md-4
-      p.lead Suite D is gossiping sister you never had. Access job information from Prepress as it happens.
+    //- preflight card
+    .col-12.col-md-6
+      .card
+        .card-block
+          h4 Preflight Information
+            small &nbsp;
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star-o
+              i.fa.fa-star-o
+            span.badge.badge-pill.badge-default.float-right 6 Items
+          p.address Stage: Proof 1
+          p.facilities Last Operator: RS
+  .row
+    //- setup card
+    .col-12.col-md-6
+      .card
+        .card-block
+          h4 Setup Checklist
+            small &nbsp;
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star-o
+              i.fa.fa-star-o
+            span.badge.badge-pill.badge-default.float-right 6 Items
+          p.address Stage: Proof 1
+          p.facilities Last Operator: RS
+    //- launch summary card
+    .col-12.col-md-6
+      .card
+        .card-block
+          h4 Summary
+            small &nbsp;
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star
+              i.fa.fa-star-o
+              i.fa.fa-star-o
+            span.badge.badge-pill.badge-default.float-right 6 Items
+          p.address Stage: Proof 1
+          p.facilities Last Operator: RS

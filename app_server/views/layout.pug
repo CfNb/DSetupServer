@@ -1,24 +1,27 @@
+include ./mixins.pug
 doctype html
 html
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title= title
+    title Suite D - #{title}
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark
       .container
-        a.navbar-brand(href='/ ') Suite D
+        a.navbar-brand(href='/') Suite D
         button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarMain')
           span.navbar-toggler-icon
         #navbarMain.navbar-collapse.collapse
-          form.form-inline.my-2.my-lg-0.mx-auto
-            input.form-control.mr-sm-2(type='search', placeholder='Customer, Job or Item #', aria-label="Search")
-            button.btn.btn-outline-success.my-2(type='submit') Go
+          +search
           ul.navbar-nav.ml-auto
             li.nav-item
-              a.nav-link(href='/') Home
+              a.nav-link(href='/customers') Customers
+            li.nav-item
+              a.nav-link(href='/Jobs') Jobs
+            li.nav-item
+              a.nav-link(href='/Items') Items
     .container
       block content
       footer
@@ -28,3 +31,5 @@ html
     script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js')
     script(src='/javascripts/bootstrap.bundle.min.js')
+    script(src='/javascripts/validation.js')
+    script(src='/javascripts/forms.js')

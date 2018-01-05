@@ -1,25 +1,65 @@
 extends layout
 
 block content
-  .row.banner
-    .col-12
-      h1 Customer#
-      p &nbsp;Review the Prepress Status of Jobs by entering a reference number in the search box above.
+  +pageHeader(pageHeader.title, pageHeader.actioncall)
+  //- customer information
   .row
-    .col-12.col-md-8
-      p Recent Jobs:
-      .card
+    .col-12
+      .card.banner-card
         .card-block
-          h4
-            a(href="/location") Job# 106555
-            small &nbsp;
-              i.fa.fa-star
-              i.fa.fa-star
-              i.fa.fa-star
-              i.fa.fa-star-o
-              i.fa.fa-star-o
-            span.badge.badge-pill.badge-default.float-right 6 Items
-          p.address Stage: Proof 1
-          p.facilities Last Operator: RS
-    .col-12.col-md-4
-      p.lead Suite D is the gossiping sister you never had. Access job information from Prepress as it happens.
+          form(action="", method="post", role="form")
+            .form-group.row
+              label.col-10.col-sm-3.col-form-label.text-sm-right(for="number") Customer #:
+              .col-6.col-sm-3.col-lg-2
+                input#number.form-control(name="number", value=customer.number)
+            .form-group.row
+              label.col-10.col-sm-3.col-form-label.text-sm-right(for="name") Name:
+              .col-12.col-sm-8
+                input#name.form-control(name="name", value=customer.name)
+            .form-group.row
+              label.col-12.col-sm-3.text-sm-right(for="contact") Contacts:
+              #dynamic-fields.col-12.col-sm-7(count=customer.contacts.length)
+                each contact, i in customer.contacts
+                  .input-group(class="dynamic-field" + i)
+                    input.form-control(name="contact" type="text", placeholder="name@address.com", aria-label="email contact")
+                    .input-group-append(id="dynamic-field" + i)
+                      button#remove1.btn.btn-secondary.remove-me(type="button")
+                        i.fa.fa-minus(aria-hidden="true")
+                button.btn.btn-primary.add-more.float-right(type="button")
+                  i.fa.fa-plus(aria-hidden="true")
+            .form-group.row
+              .col-12.col-sm-3.text-sm-right Contacts:
+              .col-12.col-sm-9
+                each contact in customer.contacts
+                  a(href='')
+                    button.btn.btn-primary.input-group-text(type="button") test &nbsp;
+                      span.badge.badge-secondary
+                        i.fa.fa-minus(aria-hidden="true")
+                a(href='')
+                  button.btn.btn-primary(type="button")
+                    i.fa.fa-plus(aria-hidden="true")
+            .form-group.row
+            button.btn.btn-primary.float-right 
+              i.fa.fa-refresh(aria-hidden="true")
+              |  Update
+            a(href='/customer/' + customer.number + '/delete/' + customer._id)
+              button.btn.btn-secondary.float-right(type="button")
+                i.fa.fa-trash(aria-hidden="true")
+                |  Delete
+  .row
+    //- customer's jobs list
+    if (customer.jobs.length)
+      each job in customer.jobs
+        .row
+          .col-12
+            a.card(href='/job' + job.number)
+              .card-block
+                span.h4= job.number
+                span &nbsp;-&nbsp;#{job.description}
+                span.badge.badge-pill.badge-default.float-right #{job.itemCount} items
+    else
+      .row
+        .col-12
+          a.card(href='/customer/' + customer.number + '/job/add')
+            .card-block
+              span.h4 There are currently no jobs for this customer. Click to add one.
