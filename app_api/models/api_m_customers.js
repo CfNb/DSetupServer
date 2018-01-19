@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const contactModel = require('./api_m_contacts');
 const noteModel = require('./api_m_notes');
 const jobModel = require('./api_m_jobs');
+
 
 const customerSchema = new mongoose.Schema({
   number: {
@@ -9,7 +9,7 @@ const customerSchema = new mongoose.Schema({
     required: true,
     uppercase: true,
     trim: true,
-    match: /[A-Z]{4}\d{2}/
+    match: /^[A-Z]{4}\d{2}$/
   },
   name: {
     type: String,
@@ -35,7 +35,12 @@ const customerSchema = new mongoose.Schema({
     trim: true,
     match: /^[A-Z]{2,3}$/
   },
-  contacts: [contactModel.schema],
+  contacts: [{
+    type: String,
+    lowercase: true,
+    trim: true,
+    match: /.*@.*\..*/
+  }],
   notes: [noteModel.schema],
   jobs: [jobModel.schema]
 });

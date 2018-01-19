@@ -85,6 +85,7 @@ const customerUpdate = function (req, res) {
       }
       customer.number = req.body.number;
       customer.name = req.body.name;
+      ///problem:
       customer.contacts = req.body.contacts;
       customer.save((err, customer) => {
         if (err) {

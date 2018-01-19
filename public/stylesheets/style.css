@@ -126,3 +126,7 @@ a:hover.card {
   text-decoration:none;
   background-color: #ff944d;
 }
+
+.error {
+  color: #ff0000;
+}

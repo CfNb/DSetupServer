@@ -55,7 +55,8 @@ const _renderCustomer = function (req, res, responseBody) {
       title: responseBody.name,
       actioncall: 'Edit customer information below or select a job to view its details',
     },
-    customer: responseBody
+    customer: responseBody,
+    updated: req.query.update
   });
 }
 
@@ -90,6 +91,7 @@ const addCustomer = function (req, res) {
   });
 };
 
+
 /* POST customer creation page data, adding customer to database */
 const doAddCustomer = function (req, res) {
   if (!req.body.name || !req.body.number) {
@@ -118,9 +120,38 @@ const doAddCustomer = function (req, res) {
 };
 
 
+/* PUT updated customer information */
+const updateCustomer = function (req, res) {
+    console.log(req.body);
+    let contactArray = Object.entries(req.body)
+    contactArray = contactArray.filter(key => key[0].startsWith("contact") && key[1] !== '');
+    contactArray = contactArray.map(x => x[1]);
+    const postdata = {
+      number: req.body.number,
+      name: req.body.name,
+      contacts: contactArray
+    };
+    console.log(postdata);
+    const requestOptions = {
+    url: api.server + '/customers/' + req.params.customerNumber,
+    method: 'PUT',
+    json: postdata
+  };
+  request(
+    requestOptions,
+    (err, response, body) => {
+      if (response.statusCode === 200) {
+        res.redirect('/customer/' + body.number + '?update=successful');
+      } else {
+        util._showError(req, res, response.statusCode, body.message);
+      }
+    }
+  );
+}
+
 /* DELETE a customer, only allowed if customer has no job content */
 const doDeleteCustomer = function (req, res) {
-  //check if customer has any jobs
+  //check if customer has any jobs!
   
   const requestOptions = {
     url: api.server + '/customers/' + req.params.customerID,
@@ -140,9 +171,9 @@ const doDeleteCustomer = function (req, res) {
 }
 
 
-
 module.exports = {
   customer,
+  updateCustomer,
   customers,
   addCustomer,
   doAddCustomer,

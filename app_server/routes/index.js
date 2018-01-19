@@ -18,7 +18,9 @@ router.get('/customers', c_Customers.customers);
 router.route('/customer/add')
   .get(c_Customers.addCustomer)
   .post(c_Customers.doAddCustomer);
-router.get('/customer/:customerNumber', c_Customers.customer);
+router.route('/customer/:customerNumber')
+  .get(c_Customers.customer)
+  .post(c_Customers.updateCustomer);
 router.get('/customer/:customerNumber/delete/:customerID', c_Customers.doDeleteCustomer)
 router.route('/customer/:customerNumber/job/add')
   .get(c_Jobs.addJob)

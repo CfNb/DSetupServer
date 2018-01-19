@@ -1,41 +1,32 @@
-// Dynamic Fields, add additional fields, removes fields
+// Dynamic Fields, adds an additional field
 $(".add-more").click(function(e){
-    e.preventDefault();
-  
-    // current field:
-    const cur = parseInt($("#dynamic-fields").attr("count"), 10);
-    const next = 1 + cur;
-  
-    // button to replace cur's add button
-    ////let removeBtn = '<div class="input-group-append">'
-    let removeBtn = '<button id="remove' + cur + '" class="btn btn-secondary remove-me" type="button">'
-    removeBtn += '<i class="fa fa-minus" aria-hidden="true"></i></button>';
-  
-    let newIn = '<div class="input-group dynamic-field' + next + '">';
-    newIn += '<input class="form-control" id="contact' + next + '" name="contact' + next + '" type="text" placeholder="name@address.com" aria-label="email contact">';
-    newIn += '<div id="dynamic-field' + next + '" class="input-group-append"><button class="btn btnsecondary add-more</div>';
-  
-    // parse html strings on the fly:
-    const newInput = $(newIn);
-    const removeButton = $(removeBtn);
+  e.preventDefault();
 
-    // add new input-group after cur 
-    $('.dynamic-field' + cur).after(newInput);
+  // current field:
+  const id = $(this).data("id");
+  const cur = parseInt($(this).data("count"), 10);
+  const next = 1 + cur;
 
-    // move add-more button from cur to newInput
-    $(".add-more").appendTo($("#dynamic-field" + next));
+  // duplicate input 0, updating id
+  const divToClone = $(this).prev(".input-group").attr("id");
+  $("#" + divToClone).clone(true).attr("id", id + next)
+    .find("input:text").val("").attr("name", id + '[' + next + ']').end()
+    .insertBefore(this);
 
-    // add remove button to cur
-    $("#dynamic-field" + cur).html(removeButton);
-  
-    // increment next in html
-    $("#dynamic-fields").attr("count", next);
-  
-    $('.remove-me').click(function(e){
-        e.preventDefault();
-        var contactNum = this.id.charAt(this.id.length-1);
-        var contactID = "#contact" + contactNum;
-        $(this).remove();
-        $(contactID).remove();
-    });
+  // increment next in html
+  $(this).data("count", next);
+});
+
+// Dynamic Fields, removes a field
+$('.remove-me').click(function(e){
+  e.preventDefault();
+  const divToRemove = $(this).closest(".input-group").attr("id");
+  const siblings = $("#" + divToRemove).siblings(".input-group").length;
+  if (siblings > 0) {
+    // remove input
+    $("#" + divToRemove).remove();
+  } else {
+    // reset input's value
+    $("#" + divToRemove).find("input:text").val("");
+  }
 });
