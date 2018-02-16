@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  +pageHeader(pageHeader.title, pageHeader.actioncall)
+  - if (updated) 
+    .alert.alert-success(role="alert")
+      a.closeAlert(onclick="$('.alert').hide()")
+        i.fa.fa-times-circle(aria-hidden="true")
+      | #{updated} has been updated
+  - if (deleted) 
+    .alert.alert-danger(role="alert")
+      a.closeAlert(onclick="$('.alert').hide()")
+        i.fa.fa-times-circle(aria-hidden="true")
+      | The color has been removed
+  - if (added) 
+    .alert.alert-success(role="alert") 
+      a.closeAlert(onclick="$('.alert').hide()")
+        i.fa.fa-times-circle(aria-hidden="true")
+      | #{added} has been added
+  //- outsource list
+  .error= message
+  .col-12
+    - kindOpts = ['PANTONE', 'CUSTOM']
+    form(action="", method="post", role="form")
+      .input-group.row
+        input.form-control.col-5.col-sm-6(name="name", type="text", placeholder="Name", aria-label="name")
+        select.form-control.col-3.col-sm-2(name="kind", aria-label="kind")
+          option(selected disabled hidden) Kind
+          each opt in kindOpts
+            option #{opt}
+        .form-check.form-check-inline.orange
+          input.form-check-input(type="radio", name="recommend", value="recommendOrange", aria-label="recommendOrange")
+          label.form-check-label(for="recommendOrange") 
+        .form-check.form-check-inline.green
+          input.form-check-input(type="radio", name="recommend", value="recommendGreen", aria-label="recommendGreen")
+          label.form-check-label(for="recommendGreen") 
+        .form-check.form-check-inline.violet
+          input.form-check-input(type="radio", name="recommend", value="recommendViolet", aria-label="recommendViolet")
+          label.form-check-label(for="recommendViolet") 
+        .form-check.form-check-inline
+          input.form-check-input(type="radio", name="recommend", value="recommendNone", aria-label="recommendNone")
+          label.form-check-label(for="recommendNone") 
+        .input-group-append
+          button.btn.btn-primary(disabled)
+            i.fa.fa-plus(aria-hidden="true")
+    each color, i in colors
+      form(action="/colors/" + color._id, method="post", role="form")
+        .input-group.row
+          input.form-control.col-5.col-sm-6(name="name", type="text", placeholder="Name", aria-label="name", value=color.name)
+          - if (color.hasOwnProperty('scrapeData'))
+              a.toggleScrapeData
+                i.fa.fa-info-circle(aria-hidden="true")
+              - d = color.scrapeData
+          input.form-control.col-3.col-sm-2(name="kind", type="text", placeholder="Kind", aria-label="kind", value=color.kind readonly)
+          .form-check.form-check-inline.orange
+            input.form-check-input(type="radio", name="recommend", value="recommendOrange", aria-label="recommendOrange" checked=color.recommendOrange)
+            label.form-check-label(for="recommendOrange") 
+          .form-check.form-check-inline.green
+            input.form-check-input(type="radio", name="recommend", value="recommendGreen", aria-label="recommendGreen" checked=color.recommendGreen)
+            label.form-check-label(for="recommendGreen") 
+          .form-check.form-check-inline.violet
+            input.form-check-input(type="radio", name="recommend", value="recommendViolet", aria-label="recommendViolet" checked=color.recommendViolet)
+            label.form-check-label(for="recommendViolet") 
+          .form-check.form-check-inline
+            input.form-check-input(type="radio", name="recommend", value="recommendNone", aria-label="recommendNone" checked=!color.recommendOrange && !color.recommendGreen && !color.recommendViolet)
+            label.form-check-label(for="recommendNone")
+          .input-group-append
+            button.btn.btn-primary(type="submit", disabled)
+              i.fa.fa-refresh(aria-hidden="true")
+          .input-group-append
+            button.btn.btn-secondary(type="button", onClick="location.href='/colors/delete/" + color._id + "'")
+              i.fa.fa-trash(aria-hidden="true")
+        - if (d)
+          .scrapeInfo.row &nbsp; #{d.c_name}: #{d.c_cmyk[0]} / #{d.c_cmyk[1]} / #{d.c_cmyk[2]} / #{d.c_cmyk[3]} &nbsp; #{d.xgc_name}: #{d.xgc_cmykogv[0]} / #{d.xgc_cmykogv[1]} / #{d.xgc_cmykogv[2]} / #{d.xgc_cmykogv[3]} / #{d.xgc_cmykogv[4]} / #{d.xgc_cmykogv[5]} / #{d.xgc_cmykogv[6]}

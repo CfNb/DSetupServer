@@ -38,11 +38,11 @@ block content
                 button.btn.btn-primary.add-more.float-right(type="button",data-id=theId,data-count=customer.contacts.length)
                   i.fa.fa-plus(aria-hidden="true")
             .form-group.row
-            button.btn.btn-primary.float-right 
+            button.update.btn.btn-primary.float-right(disabled) 
               i.fa.fa-refresh(aria-hidden="true")
               |  Update
             a(href='/customer/' + customer.number + '/delete/' + customer._id)
-              button.btn.btn-secondary.float-right(type="button")
+              button.remove.btn.btn-secondary.float-right(type="button")
                 i.fa.fa-trash(aria-hidden="true")
                 |  Delete
   .row

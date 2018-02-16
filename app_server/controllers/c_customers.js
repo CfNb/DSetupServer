@@ -3,6 +3,7 @@ const request = require('request');
 const api = require('./apiOptions');
 const util = require('./c_utilities');
 
+
 /* GET customers page, listing all customer */
 const _renderCustomers = function(req, res, responseBody) {
   let message = null;
@@ -14,6 +15,9 @@ const _renderCustomers = function(req, res, responseBody) {
       message = 'no customers found';
     }
   }
+  
+  responseBody = util.sortObjsBy(responseBody, 'name');
+  
   res.render('customers', {
     title: 'Customers',
     pageHeader: {
@@ -72,7 +76,7 @@ const customer = function (req, res) {
       if (response.statusCode === 200) {
         _renderCustomer(req, res, body);
       } else {
-        util._showError(req, res, response.statusCode, body.message);
+        util.showError(req, res, response.statusCode, body.message);
       }
     }
   );
@@ -112,7 +116,7 @@ const doAddCustomer = function (req, res) {
         if (response.statusCode === 201) {
           res.redirect('/customer/' + body.number);
         } else {
-          util._showError(req, res, response.statusCode, body.message);
+          util.showError(req, res, response.statusCode, body.message);
         }
       }
     );
@@ -122,7 +126,6 @@ const doAddCustomer = function (req, res) {
 
 /* PUT updated customer information */
 const updateCustomer = function (req, res) {
-    console.log(req.body);
     let contactArray = Object.entries(req.body)
     contactArray = contactArray.filter(key => key[0].startsWith("contact") && key[1] !== '');
     contactArray = contactArray.map(x => x[1]);
@@ -131,7 +134,6 @@ const updateCustomer = function (req, res) {
       name: req.body.name,
       contacts: contactArray
     };
-    console.log(postdata);
     const requestOptions = {
     url: api.server + '/customers/' + req.params.customerNumber,
     method: 'PUT',
@@ -143,7 +145,7 @@ const updateCustomer = function (req, res) {
       if (response.statusCode === 200) {
         res.redirect('/customer/' + body.number + '?update=successful');
       } else {
-        util._showError(req, res, response.statusCode, body.message);
+        util.showError(req, res, response.statusCode, body.message);
       }
     }
   );
@@ -164,7 +166,7 @@ const doDeleteCustomer = function (req, res) {
       if (response.statusCode === 204) {
         res.redirect('/customers?del=' + req.params.customerNumber);
       } else {
-        util._showError(req, res, response.statusCode, body.message);
+        util.showError(req, res, response.statusCode, body.message);
       }
     }
   );

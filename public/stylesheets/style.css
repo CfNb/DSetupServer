@@ -84,8 +84,13 @@ h4 small {
 }
 
 /* highlight delete on button hover*/
-button:hover span.badge-secondary, button.btn-secondary:hover {
-  background:red;
+button:hover span.badge-secondary, button.btn-secondary:hover:enabled {
+  background: red;
+}
+
+/* highlight primary on button hover*/
+button:hover span.badge-primary, button.btn-primary:hover:enabled {
+  background: limegreen;
 }
 
 .address {
@@ -93,7 +98,7 @@ button:hover span.badge-secondary, button.btn-secondary:hover {
 }
 
 .facilities span.badge {
-  margin-right:2px;
+  margin-right: 2px;
 }
 
 legend {
@@ -129,4 +134,50 @@ a:hover.card {
 
 .error {
   color: #ff0000;
+}
+
+/* position close button for alert boxes */
+.closeAlert {
+  margin-right: 10px;
+}
+
+/* postition check boxes for forms */
+.form-check-input {
+  margin-left: 2px;
+}
+.form-check-inline {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  padding-left: .25rem;
+  padding-right: .25rem;
+  padding-top: .4rem;
+}
+
+/* apply background color by adding class */
+.orange {
+  background-color: darkorange;
+}
+.green {
+  background-color: darkturquoise;
+}
+.violet {
+  background-color: blueviolet;
+}
+
+.orange, .green, .violet {
+  border: 1px solid #ced4da;
+}
+
+/* handle scrape data on colors page */
+.toggleScrapeData {
+  position: absolute;
+  left: -16px;
+  top: 5px;
+}
+.toggleScrapeData .fa-info-circle {
+  color: darkgrey;
+}
+.scrapeInfo {
+  display: none;
 }

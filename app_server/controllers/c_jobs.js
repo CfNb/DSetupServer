@@ -1,6 +1,7 @@
 /* Controller for Job pages */
 const request = require('request');
 const api = require('./apiOptions');
+const util = require('./c_utilities');
 
 /* GET job page. */
 const job = function (req, res) {
@@ -26,14 +27,33 @@ const job = function (req, res) {
 };
 
 /* GET job creation page */
-const addJob = function (req, res) {
+const _renderAddJob = function (req, res, responseBody) {
   res.render('addJob', {
     title: 'New Job',
     pageHeader: {
       title: 'Add a New Job',
       actioncall: 'Enter details to create a new Job for Customer ' + req.params.customerNumber,
-    }
+    },
+    outsource: responseBody.locations
   });
+}
+
+const addJob = function (req, res) {
+  const requestOptions = {
+    url : api.server + 'outsource/',
+    method : 'GET',
+    json : {}
+  };
+  request(
+    requestOptions,
+    (err, response, body) => {
+      if (response.statusCode === 200) {
+        _renderAddJob(req, res, body);
+      } else {
+        util.showError(req, res, response.statusCode, body.message);
+      }
+    }
+  );
 };
 
 /* POST job creation page data, adding job to database */
@@ -57,7 +77,7 @@ const doAddJob = function (req, res) {
       if (response.statusCode === 201) {
       res.redirect(`/location/${locationid}`);
       } else {
-      _showError(req, res, response.statusCode);
+      util.showError(req, res, response.statusCode);
       }
     }
   );

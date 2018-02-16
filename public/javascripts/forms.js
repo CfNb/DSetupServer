@@ -29,4 +29,17 @@ $('.remove-me').click(function(e){
     // reset input's value
     $("#" + divToRemove).find("input:text").val("");
   }
+  // enable form update button
+  $(".update").attr('disabled', false);
 });
+
+// Enable form submit button on field change
+$("form").on('input change', function() {
+  $('.btn-primary', this).attr('disabled', false);
+});
+
+// Toggle scrape info on colors page
+$(".toggleScrapeData").click(function(e) {
+  e.preventDefault();
+  $(".scrapeInfo", this.closest("form")).toggle();
+}); 

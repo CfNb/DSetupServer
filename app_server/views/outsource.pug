@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  +pageHeader(pageHeader.title, pageHeader.actioncall)
+  - if (updated) 
+    .alert.alert-success(role="alert")
+      a.closeAlert(onclick="$('.alert').hide()")
+        i.fa.fa-times-circle(aria-hidden="true")
+      | Location #{updated} has been updated
+  - if (deleted) 
+    .alert.alert-danger(role="alert")
+      a.closeAlert(onclick="$('.alert').hide()")
+        i.fa.fa-times-circle(aria-hidden="true")
+      | Location #{deleted} has been removed
+  - if (added) 
+    .alert.alert-success(role="alert") 
+      a.closeAlert(onclick="$('.alert').hide()")
+        i.fa.fa-times-circle(aria-hidden="true")
+      | Location #{added} has been added
+  //- outsource list
+  .error= message
+  .col-12
+    form(action="", method="post", role="form")
+      .input-group.row
+        input.form-control.col-3.col-sm-2(name="abbreviation", type="text", placeholder="Code", aria-label="abbreviation")
+        input.form-control.col-6.col-sm-8(name="name", class="locationName", type="text", placeholder="Name", aria-label="name")
+        .input-group-append
+          button.btn.btn-primary(disabled)
+            i.fa.fa-plus(aria-hidden="true")
+    each location, i in outsources
+      form(action="/outsource/" + location._id, method="post", role="form")
+        .input-group.row
+          input.form-control.col-3.col-sm-2(name="abbreviation", type="text", placeholder="Code", aria-label="abbreviation", value=location.abbreviation)
+          input.form-control.col-6.col-sm-8(name="name", type="text", placeholder="Name", aria-label="name", value=location.name)
+          .input-group-append
+            button.btn.btn-primary(type="submit", disabled)
+              i.fa.fa-refresh(aria-hidden="true")
+            button.btn.btn-secondary(type="button", onClick="location.href='/outsource/delete/" + location.abbreviation + "/" + location._id + "'")
+              i.fa.fa-trash(aria-hidden="true")

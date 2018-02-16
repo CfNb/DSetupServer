@@ -42,3 +42,4 @@ process.on('SIGTERM', () => {
 });
 
 require('./api_m_customers');
+require('./api_m_outsource');

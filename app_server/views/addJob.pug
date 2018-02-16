@@ -22,9 +22,6 @@ block content
         label.col-10.col-sm-3.col-form-label.text-sm-right(for="outsource") Outsource to:
         .col-12.col-sm-4
           select#rating.form-control.input-sm(name="outsource")
-            option Create It Packaging
-            option Grace Imaging
-            option 3
-            option 2
-            option 1
+            each location, i in outsource
+              option= location
       button.btn.btn-primary.float-right Create Job

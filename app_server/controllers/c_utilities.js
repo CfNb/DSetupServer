@@ -1,10 +1,11 @@
-const _showError = function (req, res, status, message) {
+// common handler for errors in request response from api
+const showError = function (req, res, status, message) {
   let title = '';
   let content = message;
   if (status === 404) {
     title = '404, page not found';
     if (message === '') {
-      content = 'Oh dear. Looks like we can\'t find this page. Sorry about that. It\'s too bad, bit of a tradgedy really.  Try not to get too down about it.  Please, don\'t blame yourself, it happens to everyone now and again.  Best to pick yourself up and carry on.';
+      content = 'Looks like we can\'t find this page. Sorry about that.';
     }
   } else {
     title = `${status}, something's gone wrong`;
@@ -22,6 +23,17 @@ const _showError = function (req, res, status, message) {
   });
 };
 
+// sort array of objects by given property
+// property value must be string
+const sortObjsBy = function (arr, prop) {
+	arr.sort(function (a, b) {		
+		return a[prop].localeCompare(b[prop]);
+	});
+	return arr
+};
+
+
 module.exports = {
-  _showError
+  showError,
+  sortObjsBy
 }
