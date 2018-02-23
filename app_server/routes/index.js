@@ -36,9 +36,12 @@ router.get('/outsource/delete/:abbreviation/:outsourceID', c_Outsource.doDeleteO
 
 /* Colors page */
 router.route('/colors')
-  .get(c_Colors.colors)
+  .get(c_Colors.colors) // defaults to page one of color list
   .post(c_Colors.doAddColor);
-router.post('/colors/:colorID', c_Colors.doUpdateColor);
+router.route('/colors/:page', c_Colors.colors) // color list by page
+  .get (c_Colors.colors)
+  .post(c_Colors.doAddColor);
+router.post('/colors/update/:colorID', c_Colors.doUpdateColor);
 router.get('/colors/delete/:colorID', c_Colors.doDeleteColor);
 
 /* Other pages */

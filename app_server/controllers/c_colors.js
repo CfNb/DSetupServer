@@ -5,6 +5,7 @@ const util = require('./c_utilities');
 
 
 /* GET color page, listing all colors */
+/* Paginate to 500 colors per page */
 const _renderColors = function(req, res, responseBody) {
   let message = null;
   if (!(responseBody instanceof Array)) {
@@ -18,13 +19,26 @@ const _renderColors = function(req, res, responseBody) {
   
   responseBody = util.sortObjsBy(responseBody, 'name');
   
+  const perPage = 250;
+  const colorCount = responseBody.length;
+  const page = parseInt(req.params.page) || 1;
+  const pages = Math.ceil(colorCount / perPage);
+  
+  const start = (perPage * page) - perPage;
+  const end = (perPage * page) + 1;
+  const last = page === pages ? colorCount : (perPage * page);
+  
+  const pageColors = responseBody.slice(start, end);
+  
   res.render('colors', {
     title: 'Colors',
     pageHeader: {
       title: 'Color List',
-      actioncall: 'Add, remove, or edit colors. Current count: ' + responseBody.length + ' records.',
+      actioncall: 'Add, remove, or edit colors. Showing ' + (start + 1) + ' thru ' + last + ' of ' + colorCount + ' records.',
     },
-    colors: responseBody,
+    page: page,
+    pages: pages,
+    colors: pageColors,
     message: message,
     updated: req.query.updated,
     deleted: req.query.deleted,
@@ -85,7 +99,7 @@ const doAddColor = function (req, res) {
 /* PUT update color info, redirect all colors */
 const doUpdateColor = function (req, res) {
   
-  console.log(req);
+  //console.log(req);
   
   const postdata = {
     name: req.body.name,
@@ -95,7 +109,7 @@ const doUpdateColor = function (req, res) {
     recommendViolet: req.body.recommend === 'recommendViolet'
   };
   
-  console.log(postdata);
+  //console.log(postdata);
   
   const requestOptions = {
   url: api.server + '/color/' + req.params.colorID,

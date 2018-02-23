@@ -20,31 +20,62 @@ block content
   //- outsource list
   .error= message
   .col-12
-    - kindOpts = ['PANTONE', 'CUSTOM']
-    form(action="", method="post", role="form")
-      .input-group.row
-        input.form-control.col-5.col-sm-6(name="name", type="text", placeholder="Name", aria-label="name")
-        select.form-control.col-3.col-sm-2(name="kind", aria-label="kind")
-          option(selected disabled hidden) Kind
-          each opt in kindOpts
-            option #{opt}
-        .form-check.form-check-inline.orange
-          input.form-check-input(type="radio", name="recommend", value="recommendOrange", aria-label="recommendOrange")
-          label.form-check-label(for="recommendOrange") 
-        .form-check.form-check-inline.green
-          input.form-check-input(type="radio", name="recommend", value="recommendGreen", aria-label="recommendGreen")
-          label.form-check-label(for="recommendGreen") 
-        .form-check.form-check-inline.violet
-          input.form-check-input(type="radio", name="recommend", value="recommendViolet", aria-label="recommendViolet")
-          label.form-check-label(for="recommendViolet") 
-        .form-check.form-check-inline
-          input.form-check-input(type="radio", name="recommend", value="recommendNone", aria-label="recommendNone")
-          label.form-check-label(for="recommendNone") 
-        .input-group-append
-          button.btn.btn-primary(disabled)
-            i.fa.fa-plus(aria-hidden="true")
+    if pages > 1
+      ul.pagination.justify-content-center
+        if page === 1
+          li.page-item.active
+            span.page-link 1
+        else
+          li.page-item
+            a.page-link(href="/colors/1") 1
+        - i = (page > 5 ? page - 5 : 1)
+        if i !== 1
+          li.page-item
+            a.page-link(href="/colors/" + (page - 5)) &laquo;
+        while i < (page + 4) && i < pages - 1
+          - i++
+          if i == page
+            li.page-item.active
+              span.page-link #{i}
+          else
+            li.page-item
+              a.page-link(href="/colors/" + i) #{i}
+        if i < pages - 1
+          li.page-item
+            a.page-link(href="/colors/" + (page + 5)) &raquo;
+        if page === pages
+          li.page-item.active
+            span.page-link #{pages}
+        else
+          li.page-item
+            a.page-link(href="/colors/" + pages) #{pages}
+  .col-12
+    if page === 1
+      - kindOpts = ['PANTONE', 'CUSTOM']
+      form(action="", method="post", role="form")
+        .input-group.row
+          input.form-control.col-5.col-sm-6(name="name", type="text", placeholder="Name", aria-label="name")
+          select.form-control.col-3.col-sm-2(name="kind", aria-label="kind")
+            option(selected disabled hidden) Kind
+            each opt in kindOpts
+              option #{opt}
+          .form-check.form-check-inline.orange
+            input.form-check-input(type="radio", name="recommend", value="recommendOrange", aria-label="recommendOrange")
+            label.form-check-label(for="recommendOrange") 
+          .form-check.form-check-inline.green
+            input.form-check-input(type="radio", name="recommend", value="recommendGreen", aria-label="recommendGreen")
+            label.form-check-label(for="recommendGreen") 
+          .form-check.form-check-inline.violet
+            input.form-check-input(type="radio", name="recommend", value="recommendViolet", aria-label="recommendViolet")
+            label.form-check-label(for="recommendViolet") 
+          .form-check.form-check-inline
+            input.form-check-input(type="radio", name="recommend", value="recommendNone", aria-label="recommendNone")
+            label.form-check-label(for="recommendNone") 
+          .input-group-append
+            button.btn.btn-primary(disabled)
+              i.fa.fa-plus(aria-hidden="true")
     each color, i in colors
-      form(action="/colors/" + color._id, method="post", role="form")
+      form(action="/colors/update/" + color._id, method="post", role="form")
         .input-group.row
           input.form-control.col-5.col-sm-6(name="name", type="text", placeholder="Name", aria-label="name", value=color.name)
           - if (color.hasOwnProperty('scrapeData'))
@@ -66,9 +97,40 @@ block content
             label.form-check-label(for="recommendNone")
           .input-group-append
             button.btn.btn-primary(type="submit", disabled)
-              i.fa.fa-refresh(aria-hidden="true")
+              i.fa.fa-save(aria-hidden="true")
           .input-group-append
             button.btn.btn-secondary(type="button", onClick="location.href='/colors/delete/" + color._id + "'")
               i.fa.fa-trash(aria-hidden="true")
         - if (d)
           .scrapeInfo.row &nbsp; #{d.c_name}: #{d.c_cmyk[0]} / #{d.c_cmyk[1]} / #{d.c_cmyk[2]} / #{d.c_cmyk[3]} &nbsp; #{d.xgc_name}: #{d.xgc_cmykogv[0]} / #{d.xgc_cmykogv[1]} / #{d.xgc_cmykogv[2]} / #{d.xgc_cmykogv[3]} / #{d.xgc_cmykogv[4]} / #{d.xgc_cmykogv[5]} / #{d.xgc_cmykogv[6]}
+  .col-12
+  .col-12
+    if pages > 1
+      ul.pagination.justify-content-center
+        if page === 1
+          li.page-item.active
+            span.page-link 1
+        else
+          li.page-item
+            a.page-link(href="/colors/1") 1
+        - i = (page > 5 ? page - 5 : 1)
+        if i !== 1
+          li.page-item
+            a.page-link(href="/colors/" + (page - 5)) &laquo;
+        while i < (page + 4) && i < pages - 1
+          - i++
+          if i == page
+            li.page-item.active
+              span.page-link #{i}
+          else
+            li.page-item
+              a.page-link(href="/colors/" + i) #{i}
+        if i < pages - 1
+          li.page-item
+            a.page-link(href="/colors/" + (page + 5)) &raquo;
+        if page === pages
+          li.page-item.active
+            span.page-link #{pages}
+        else
+          li.page-item
+            a.page-link(href="/colors/" + pages) #{pages}
