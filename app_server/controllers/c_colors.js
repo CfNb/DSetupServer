@@ -5,7 +5,7 @@ const util = require('./c_utilities');
 
 
 /* GET color page, listing all colors */
-/* Paginate to 500 colors per page */
+/* Paginate to # of colors per page */
 const _renderColors = function(req, res, responseBody) {
   let message = null;
   if (!(responseBody instanceof Array)) {
@@ -19,7 +19,7 @@ const _renderColors = function(req, res, responseBody) {
   
   responseBody = util.sortObjsBy(responseBody, 'name');
   
-  const perPage = 250;
+  const perPage = 150;
   const colorCount = responseBody.length;
   const page = parseInt(req.params.page) || 1;
   const pages = Math.ceil(colorCount / perPage);
@@ -96,7 +96,7 @@ const doAddColor = function (req, res) {
   }
 };
 
-/* PUT update color info, redirect all colors */
+/* PUT update color info, redirect to all colors */
 const doUpdateColor = function (req, res) {
   
   //console.log(req);
@@ -120,7 +120,7 @@ const doUpdateColor = function (req, res) {
     requestOptions,
     (err, response, body) => {
       if (response.statusCode === 200) {
-        res.redirect('/colors?updated=' + req.body.name);
+        res.redirect('/colors/' + req.query.page + '?updated=' + req.body.name);
       } else {
         util.showError(req, res, response.statusCode, body.message);
       }

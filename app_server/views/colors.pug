@@ -75,7 +75,7 @@ block content
             button.btn.btn-primary(disabled)
               i.fa.fa-plus(aria-hidden="true")
     each color, i in colors
-      form(action="/colors/update/" + color._id, method="post", role="form")
+      form(action="/colors/update/" + color._id + '?page=' + page, method="post", role="form")
         .input-group.row
           input.form-control.col-5.col-sm-6(name="name", type="text", placeholder="Name", aria-label="name", value=color.name)
           - if (color.hasOwnProperty('scrapeData'))
